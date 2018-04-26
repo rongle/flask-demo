@@ -1,0 +1,29 @@
+uwsgi:
+
+    PID_DIR     : /srv/run/uwsgi
+    SOCKS_DIR   : /srv/run/apps
+    VENV_DIR    : /srv/venv
+
+    #plugins-dir : /srv/share/uwsgi/plugin
+    #plugins : python
+    #listen : 1000
+    pidfile : %(PID_DIR)/%c.pid
+    #http-socket : 0.0.0.0:13140
+    socket  : %(SOCKS_DIR)/%c.sock
+    #chmod-socket : 777
+    #logto  : /srv/log/uwsgi/$c.log
+    alarm-listen-queue  : true
+    master  : true
+    #processes   : %k
+    threads : %k
+
+    uid : nobody
+    gid : root
+
+    virtualenv  : %(VENV_DIR)/%c
+    chdir   : %d
+    mount   : /=manage.py
+    callable    : api
+    need-app    : true
+    manage-script-name  : true
+
